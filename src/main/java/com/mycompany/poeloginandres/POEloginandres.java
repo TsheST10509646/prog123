@@ -14,7 +14,7 @@ public class POEloginandres {
 
     public static void main(String[] args) {
         Scanner myInput = new Scanner(System.in);
-
+// Dectlartions
     String userName;
     String password;
     String cellPhoneNum;
