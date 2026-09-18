@@ -70,9 +70,13 @@ public class POEloginandres {
 
     System.out.println(registrationMessage);
 
-    // LOGIN
+   // LOGIN
 
-    System.out.println("\n=====LOGIN=====");
+System.out.println("\n=====LOGIN=====");
+
+boolean loginSuccessful = false;
+
+while (!loginSuccessful) {
 
     System.out.print("Enter username to login: ");
     String enteredUserName = myInput.nextLine();
@@ -80,12 +84,11 @@ public class POEloginandres {
     System.out.print("Enter password to login: ");
     String enteredPassword = myInput.nextLine();
 
-    boolean loginSuccessful =
-            loginUser(enteredUserName, enteredPassword, userName, password);
+    loginSuccessful = loginUser(enteredUserName, enteredPassword, userName, password);
 
-    System.out.println(
-            returnLoginStatus(loginSuccessful, userName)
-    );
+    System.out.println(returnLoginStatus(loginSuccessful, userName));
+}
+    
 }
 // method to check username
 public static boolean checkUserName(String userName)
