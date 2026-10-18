@@ -88,6 +88,35 @@ while (!loginSuccessful) {
 
     System.out.println(loginClassclass.returnLoginStatus(loginSuccessful, userName));
 }
+    int choice=0;
+    while(choice !=3){
+    System.out.println("\nWelcome to QuickChat!");
+    System.out.println("1. send Message");
+    System.out.println("2. Show recently sent messages");
+    System.out.println("3. Quit");
+    System.out.println("Choose an option: ");
     
+    choice=myInput.nextInt();
+    myInput.nextLine();
+    
+    switch(choice){
+    case 1:
+            System.out.println("Send Message selected");
+            // We will add your Message class code here
+            break;
+
+        case 2:
+            System.out.println("Coming Soon.");
+            break;
+
+        case 3:
+            System.out.println("Goodbye!");
+            break;
+
+        default:
+            System.out.println("Invalid option. Please try again.");
+            break;
+    }
+    }
 }
 }
