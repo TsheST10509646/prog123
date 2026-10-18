@@ -88,35 +88,121 @@ while (!loginSuccessful) {
 
     System.out.println(loginClassclass.returnLoginStatus(loginSuccessful, userName));
 }
-    int choice=0;
-    while(choice !=3){
-    System.out.println("\nWelcome to QuickChat!");
-    System.out.println("1. send Message");
-    System.out.println("2. Show recently sent messages");
-    System.out.println("3. Quit");
-    System.out.println("Choose an option: ");
-    
-    choice=myInput.nextInt();
-    myInput.nextLine();
-    
-    switch(choice){
-    case 1:
-            System.out.println("Send Message selected");
-            // We will add your Message class code here
-            break;
+   int choice = 0;
 
-        case 2:
-            System.out.println("Coming Soon.");
-            break;
+        while (choice != 3) {
 
-        case 3:
-            System.out.println("Goodbye!");
-            break;
+            System.out.println("\n===== MESSAGING MENU =====");
+            System.out.println("1. Send Message");
+            System.out.println("2. Show recently sent messages");
+            System.out.println("3. Quit");
+            System.out.print("Choose an option: ");
 
-        default:
-            System.out.println("Invalid option. Please try again.");
-            break;
+            if (!myInput.hasNextInt()) {
+                System.out.println(
+                        "Please enter a number from 1 to 3."
+                );
+                myInput.nextLine();
+                continue;
+            }
+
+            choice = myInput.nextInt();
+            myInput.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print(
+                            "Enter recipient cell number (+27...): "
+                    );
+                    String recipient = myInput.nextLine();
+
+                    System.out.print("Enter your message: ");
+                    String messageText = myInput.nextLine();
+
+                    message newMessage =
+                            new message(recipient, messageText);
+
+                    if (!newMessage.checkMessageID()) {
+                        System.out.println(
+                                "Invalid message ID."
+                        );
+                    } else if (!newMessage.checkRecipientCell()) {
+                        System.out.println(
+                                "Invalid recipient cell number."
+                        );
+                    } else if (!newMessage.checkMessageLength()) {
+                        System.out.println(
+                                "Message exceeds 250 characters."
+                        );
+                    } else {
+                        System.out.println(
+                                "Message Hash: "
+                                + newMessage.createMessageHash()
+                        );
+
+                        System.out.println(
+                                "1. Send message"
+                        );
+                        System.out.println(
+                                "2. Store message"
+                        );
+                        System.out.println(
+                                "3. Disregard message"
+                        );
+                        System.out.print("Choose an option: ");
+
+                        if (myInput.hasNextInt()) {
+                            int messageChoice = myInput.nextInt();
+                            myInput.nextLine();
+
+                            System.out.println(
+                                    newMessage.sentMessage(
+                                            messageChoice
+                                    )
+                            );
+                        } else {
+                            System.out.println(
+                                    "Invalid option."
+                            );
+                            myInput.nextLine();
+                        }
+                    }
+                    break;
+
+                case 2:
+                    System.out.println(
+                            "Recently sent messages:"
+                    );
+
+                    message messageManager = new message(
+                            "", ""
+                    );
+
+                    System.out.println(
+                            messageManager.printMessages()
+                    );
+                    break;
+
+                case 3:
+                    System.out.println("Goodbye!");
+                    break;
+
+                default:
+                    System.out.println(
+                            "Invalid option. Please try again."
+                    );
+                    break;
+            }
+        }
+
+        System.out.println(
+                "Total messages sent: "
+                + message.returnTotalMessages()
+        );
+
+        myInput.close();
     }
-    }
-}
-}
+}  
+    
+
