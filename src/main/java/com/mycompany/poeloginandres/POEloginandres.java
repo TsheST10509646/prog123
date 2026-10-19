@@ -175,13 +175,10 @@ while (!loginSuccessful) {
                             "Recently sent messages:"
                     );
 
-                    message messageManager = new message(
-                            "", ""
-                    );
+                    
+                    
 
-                    System.out.println(
-                            messageManager.printMessages()
-                    );
+                    System.out.println("Coming soon");
                     break;
 
                 case 3:
