@@ -88,117 +88,115 @@ while (!loginSuccessful) {
 
     System.out.println(loginClassclass.returnLoginStatus(loginSuccessful, userName));
 }
-   int choice = 0;
+  
+int choice = 0;
 
-        while (choice != 3) {
+// Ask how many messages the user wants to send
+System.out.print("How many messages would you like to send? ");
 
-            System.out.println("\n===== MESSAGING MENU =====");
-            System.out.println("1. Send Message");
-            System.out.println("2. Show recently sent messages");
-            System.out.println("3. Quit");
-            System.out.print("Choose an option: ");
+while (!myInput.hasNextInt()) {
+    System.out.println("Please enter a valid number.");
+    myInput.nextLine();
+    System.out.print("How many messages would you like to send? ");
+}
 
-            if (!myInput.hasNextInt()) {
-                System.out.println(
-                        "Please enter a number from 1 to 3."
-                );
-                myInput.nextLine();
-                continue;
-            }
+int numberOfMessages = myInput.nextInt();
+myInput.nextLine();
 
-            choice = myInput.nextInt();
+// Do not allow a negative number
+while (numberOfMessages < 0) {
+    System.out.println("Please enter zero or a positive number.");
+    System.out.print("How many messages would you like to send? ");
+
+    while (!myInput.hasNextInt()) {
+        System.out.println("Please enter a valid number.");
+        myInput.nextLine();
+        System.out.print("How many messages would you like to send? ");
+    }
+
+    numberOfMessages = myInput.nextInt();
+    myInput.nextLine();
+}
+
+// Count only successfully sent messages
+int messagesSent = 0;
+
+while (messagesSent < numberOfMessages) {
+
+    System.out.println("\nMESSAGE "
+            + (messagesSent + 1) + " OF " + numberOfMessages);
+
+    System.out.print("Enter recipient cell number (+27...): ");
+    String recipient = myInput.nextLine();
+
+    System.out.print("Enter your message: ");
+    String messageText = myInput.nextLine();
+
+    message newMessage = new message(recipient, messageText);
+
+    // Validate the message
+    if (!newMessage.checkMessageID()) {
+        System.out.println("Invalid message ID. Please try again.");
+        continue;
+
+    } else if (!newMessage.checkRecipientCell()) {
+        System.out.println("Invalid recipient cell number. Please try again.");
+        continue;
+
+    } else if (!newMessage.checkMessageLength()) {
+        System.out.println("Message exceeds 250 characters. Please try again.");
+        continue;
+    }
+
+    System.out.println("Message Hash: " + newMessage.createMessageHash());
+
+    int messageChoice = 0;
+
+    // Keep showing the choices until Send or Disregard is selected
+    while (messageChoice != 1 && messageChoice != 3) {
+
+        System.out.println("\nChoose what to do with this message:");
+        System.out.println("1. Send message");
+        System.out.println("2. Store message (Coming soon)");
+        System.out.println("3. Disregard message");
+        System.out.print("Enter your choice: ");
+
+        while (!myInput.hasNextInt()) {
+            System.out.println("Please enter 1, 2, or 3.");
             myInput.nextLine();
-
-            switch (choice) {
-
-                case 1:
-                    System.out.print(
-                            "Enter recipient cell number (+27...): "
-                    );
-                    String recipient = myInput.nextLine();
-
-                    System.out.print("Enter your message: ");
-                    String messageText = myInput.nextLine();
-
-                    message newMessage =
-                            new message(recipient, messageText);
-
-                    if (!newMessage.checkMessageID()) {
-                        System.out.println(
-                                "Invalid message ID."
-                        );
-                    } else if (!newMessage.checkRecipientCell()) {
-                        System.out.println(
-                                "Invalid recipient cell number."
-                        );
-                    } else if (!newMessage.checkMessageLength()) {
-                        System.out.println(
-                                "Message exceeds 250 characters."
-                        );
-                    } else {
-                        System.out.println(
-                                "Message Hash: "
-                                + newMessage.createMessageHash()
-                        );
-
-                        System.out.println(
-                                "1. Send message"
-                        );
-                        System.out.println(
-                                "2. Store message"
-                        );
-                        System.out.println(
-                                "3. Disregard message"
-                        );
-                        System.out.print("Choose an option: ");
-
-                        if (myInput.hasNextInt()) {
-                            int messageChoice = myInput.nextInt();
-                            myInput.nextLine();
-
-                            System.out.println(
-                                    newMessage.sentMessage(
-                                            messageChoice
-                                    )
-                            );
-                        } else {
-                            System.out.println(
-                                    "Invalid option."
-                            );
-                            myInput.nextLine();
-                        }
-                    }
-                    break;
-
-                case 2:
-                    System.out.println(
-                            "Recently sent messages:"
-                    );
-
-                    
-                    
-
-                    System.out.println("Coming soon");
-                    break;
-
-                case 3:
-                    System.out.println("Goodbye!");
-                    break;
-
-                default:
-                    System.out.println(
-                            "Invalid option. Please try again."
-                    );
-                    break;
-            }
+            System.out.print("Enter your choice: ");
         }
 
-        System.out.println(
-                "Total messages sent: "
-                + message.returnTotalMessages()
-        );
+        messageChoice = myInput.nextInt();
+        myInput.nextLine();
 
-        myInput.close();
+        if (messageChoice == 2) {
+            System.out.println("Coming soon");
+            messageChoice = 0;
+
+        } else if (messageChoice < 1 || messageChoice > 3) {
+            System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+            messageChoice = 0;
+        }
+    }
+
+    if (messageChoice == 1) {
+        System.out.println(newMessage.sentMessage(1));
+
+        // Count the message only when it is sent
+        messagesSent++;
+
+    } else if (messageChoice == 3) {
+        System.out.println(newMessage.sentMessage(3));
+        System.out.println("Message disregarded. Please enter a replacement.");
+        // Do not increase messagesSent.
+        // The while loop asks for another message in this same slot.
+    }
+}
+
+System.out.println("\nYou have sent all "
+        + numberOfMessages + " requested messages.");
+
     }
 }  
     
