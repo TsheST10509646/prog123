@@ -15,6 +15,7 @@ import java.io.FileWriter;;
  * @author tshep
  */
 public class message {
+    // declaration of the message.java
       private String messageID;
     private String recipient;
     private String messageText;

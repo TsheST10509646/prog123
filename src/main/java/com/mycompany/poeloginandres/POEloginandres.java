@@ -91,6 +91,8 @@ while (!loginSuccessful) {
   
 int choice = 0;
 
+System.out.println("Welcome to QuickChat");
+
 // Ask how many messages the user wants to send
 System.out.print("How many messages would you like to send? ");
 
@@ -134,16 +136,23 @@ while (messagesSent < numberOfMessages) {
 
     message newMessage = new message(recipient, messageText);
 
-    // Validate the message
+    // Display the generated 10-digit message ID
+    System.out.println("Message ID: " + newMessage.getMessageID());
+
+    // Validate the message ID
     if (!newMessage.checkMessageID()) {
         System.out.println("Invalid message ID. Please try again.");
         continue;
+    }
 
-    } else if (!newMessage.checkRecipientCell()) {
+    // Validate the recipient cell number
+    if (!newMessage.checkRecipientCell()) {
         System.out.println("Invalid recipient cell number. Please try again.");
         continue;
+    }
 
-    } else if (!newMessage.checkMessageLength()) {
+    // Validate the message length
+    if (!newMessage.checkMessageLength()) {
         System.out.println("Message exceeds 250 characters. Please try again.");
         continue;
     }
@@ -152,7 +161,7 @@ while (messagesSent < numberOfMessages) {
 
     int messageChoice = 0;
 
-    // Keep showing the choices until Send or Disregard is selected
+    // Keep showing choices until Send or Disregard is selected
     while (messageChoice != 1 && messageChoice != 3) {
 
         System.out.println("\nChoose what to do with this message:");
@@ -183,14 +192,14 @@ while (messagesSent < numberOfMessages) {
     if (messageChoice == 1) {
         System.out.println(newMessage.sentMessage(1));
 
-        // Count the message only when it is sent
+        // Count only messages that are sent
         messagesSent++;
 
     } else if (messageChoice == 3) {
         System.out.println(newMessage.sentMessage(3));
         System.out.println("Message disregarded. Please enter a replacement.");
-        // Do not increase messagesSent.
-        // The while loop asks for another message in this same slot.
+
+        // Do not increase messagesSent
     }
 }
 
