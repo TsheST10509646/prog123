@@ -26,14 +26,14 @@ public class message {
 
     private static final List<message> sentMessages =
             new ArrayList<>();
-
+//constructor
     public message(String recipient, String messageText) {
         this.messageID = generateMessageID();
         this.recipient = recipient;
         this.messageText = messageText;
         this.status = "Pending";
     }
-
+// creates random numbers and makes the a string
     private String generateMessageID() {
         Random random = new Random();
 
