@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1206379875",
+    "sender": "tsh_p",
+    "recipient": "+27636678538",
+    "text": "hello there",
+    "hash": "12:0:HELLOTHERE",
+    "status": "Stored"
+  },
+  {
+    "id": "1139735615",
+    "sender": "tsh_p",
+    "recipient": "+27636678538",
+    "text": "i hope u washed you bum",
+    "hash": "11:0:IBUM",
+    "status": "Stored"
+  }
+]
