@@ -1,11 +1,18 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.mycompany.poeloginandres;
 
-/**
- * A snapshot of a Part 2 message. It lets Part 3 save/search messages without
- * changing the original message.java class or its constructors/getters.
- */
+/** The saved details of one processed Part 2 message. */
 public final class MessageRecord {
+    static final String SENT = "Sent";
+    static final String STORED = "Stored";
+    static final String DISREGARDED = "Disregarded";
+
+    private static final String DEFAULT_SENDER = "Developer";
+    private static final String ID_PATTERN = "[0-9]{10}";
+
     private final String messageID;
     private final String sender;
     private final String recipient;
@@ -15,36 +22,45 @@ public final class MessageRecord {
 
     public MessageRecord(String messageID, String sender, String recipient,
                          String messageText, String messageHash, String status) {
-        if (messageID == null || !messageID.matches("[0-9]{10}")) {
+        if (messageID == null || !messageID.matches(ID_PATTERN)) {
             throw new IllegalArgumentException("A ten-digit message ID is required.");
         }
         if (messageText == null || messageHash == null || messageHash.isEmpty()
                 || recipient == null || status == null) {
             throw new IllegalArgumentException("Message details are incomplete.");
         }
-        if (!status.equals("Sent") && !status.equals("Stored")
-                && !status.equals("Disregarded")) {
+        if (!SENT.equals(status) && !STORED.equals(status)
+                && !DISREGARDED.equals(status)) {
             throw new IllegalArgumentException("Unknown message status: " + status);
         }
+
         this.messageID = messageID;
-        this.sender = sender == null || sender.trim().isEmpty() ? "Developer" : sender;
+        this.sender = sender == null || sender.trim().isEmpty()
+                ? DEFAULT_SENDER : sender;
         this.recipient = recipient;
         this.messageText = messageText;
         this.messageHash = messageHash;
         this.status = status;
     }
 
-    /** Read values from the ORIGINAL Part 2 message object. */
+    /** Copy details after the Part 2 message has been processed. */
     public static MessageRecord fromOriginal(message original, String sender) {
         if (original == null) {
             throw new IllegalArgumentException("A message is required.");
         }
+
         String hash = original.getMessageHash();
         if (hash == null || hash.isEmpty()) {
             hash = original.createMessageHash();
         }
-        return new MessageRecord(original.getMessageID(), sender, original.getRecipient(),
-                original.getMessageText(), hash, original.getStatus());
+
+        return new MessageRecord(
+                original.getMessageID(),
+                sender,
+                original.getRecipient(),
+                original.getMessageText(),
+                hash,
+                original.getStatus());
     }
 
     public String getMessageID() { return messageID; }

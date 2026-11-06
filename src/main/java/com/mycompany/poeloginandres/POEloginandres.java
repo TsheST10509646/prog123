@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.mycompany.poeloginandres;
 
 import java.util.Scanner;
@@ -16,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 
 public class POEloginandres {
 
-    // PART 3: THE FIVE REQUIRED ARRAYS
+    // the arrays need for part 3
 
     private static MessageRecord[] sentMessages =
             new MessageRecord[0];
@@ -37,7 +40,7 @@ public class POEloginandres {
             Path.of("stored_messages.json");
 
 
-    // PART 1: ORIGINAL REGISTRATION AND LOGIN
+    // main method
 
     public static void main(String[] args) {
 
@@ -49,7 +52,7 @@ public class POEloginandres {
 
         System.out.println("Enter your username");
         userName = myInput.nextLine();
-
+// used when the impormation inputed isnt according to requirments
         while (!loginClassclass.checkUserName(userName)) {
 
             System.out.println("Username is not correctly formatted");
@@ -72,8 +75,7 @@ public class POEloginandres {
 
             System.out.println("Your cell phone number format is incorrect");
 
-            System.out.println(
-                    "Please enter your cell phone number "
+            System.out.println("Please enter your cell phone number "
                     + "using the South African international formatting starting with +27");
 
             cellPhoneNum = myInput.nextLine();
@@ -83,7 +85,7 @@ public class POEloginandres {
 
         System.out.println("Please enter your password");
         password = myInput.nextLine();
-
+// this is message will be displaced when password is incorrect
         while (!loginClassclass.checkPasswordComplexity(password)) {
 
             System.out.println("Your password is incorrect");
@@ -94,7 +96,7 @@ public class POEloginandres {
             System.out.println("Please enter your password");
             password = myInput.nextLine();
         }
-
+// message will display when password requirments are met
         System.out.println("Password entered successfully");
 
         String registrationMessage =
@@ -106,7 +108,8 @@ public class POEloginandres {
         System.out.println("\n=====LOGIN=====");
 
         boolean loginSuccessful = false;
-
+//this method is to enter the details saved in the previous sign in and 
+//allow you to enter the programme/application
         while (!loginSuccessful) {
 
             System.out.print("Enter username to login: ");
